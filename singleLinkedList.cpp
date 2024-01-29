@@ -4,28 +4,28 @@
 // data is of type int
 // next points to another node struct
 struct Node {
+    // define struct variables
     int data;
     Node* next;
-
+    // constructor
     Node(int value) : data(value), next(nullptr) {}
 };
 
 // Define the Linked List class
 class LinkedList {
 private:
-    Node* head;
-
+    Node* head; // private var pointing to head (start) of linked list
 public:
     LinkedList() : head(nullptr) {}
 
-    // Insert a new node at the beginning of the list
+    // insert a new node at the beginning of the list
     void insertAtBeginning(int value) {
         Node* newNode = new Node(value);
         newNode->next = head;
         head = newNode;
     }
 
-    // Insert a new node at the end of the list
+    // insert a new node at the end of the list
     void insertAtEnd(int value) {
         Node* newNode = new Node(value);
         if (head == nullptr) {
@@ -39,7 +39,7 @@ public:
         current->next = newNode;
     }
 
-    // Display the elements of the linked list
+    // display the elements of the linked list
     void display() {
         Node* current = head;
         while (current->next != nullptr) {
@@ -49,7 +49,7 @@ public:
         std::cout << current->data << "\n" << std::endl;
     }
 
-    // Delete a node with a given value from the list
+    // delete a node with a given value from the list
     void deleteNode(int value) {
         Node* temp = head;
         Node* prev = nullptr;
@@ -76,7 +76,7 @@ public:
         delete temp;
     }
 
-    // Destructor to free the memory occupied by the linked list
+    // destructor to free the memory occupied by the linked list
     ~LinkedList() {
         Node* current = head;
         Node* next;
