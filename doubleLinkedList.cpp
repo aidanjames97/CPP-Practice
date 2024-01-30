@@ -68,6 +68,7 @@ class DoubleLinkedLink {
                 newNode->prev = curr->prev;
             } else {
                 newNode->next = curr;
+                head = newNode;
             }
             curr->prev = newNode;
             newNode->next = curr;
@@ -114,6 +115,35 @@ class DoubleLinkedLink {
             std::cout << curr->data << "\n" << std::endl;
         }
 
+        // delete function to delete node specified by param
+        bool deleteNode(int value) {
+            Node* tmp = head; // set tmp pointer to head
+
+            // if head of list is to be deleted
+            if (tmp != nullptr && tmp->data == value) {
+                head = tmp->next;
+                delete tmp;
+                return true;
+            }
+
+            // else searching for value
+            while(tmp != nullptr && tmp->data != value) {
+                tmp = tmp->next;
+            }
+
+            if (tmp == nullptr) return false; // couldn't find or delete node specified
+
+            // unlink / delete node
+            if(tmp->next == nullptr) {
+                tmp->prev->next = nullptr;
+            } else {
+                tmp->prev->next = tmp->next;
+                tmp->next = tmp->prev;
+            }
+            delete tmp;
+            return true;
+        }
+
         // destructor to free memory used by list <done>
         ~DoubleLinkedLink() {
             Node* curr = head; // used to step through list
@@ -156,10 +186,23 @@ int main() {
     std::cout << "backwards now, expected: \n95->90->80->25->20->15->10" << std::endl;
     list.displayBackwards();
 
+    // testing insert before
     list.insertBefore(10, 5);
     list.insertBefore(80, 75);
     list.insertBefore(95, 92);
+    std::cout << "expected: \n5->10->15->20->25->75->80->90->92->95" << std::endl;
     list.display();
+    std::cout << "expected: \n95->92->90->80->75->25->20->15->10->5" << std::endl; 
+    list.displayBackwards();
+
+    // testing delete function
+    list.deleteNode(5);
+    list.deleteNode(95);
+    list.deleteNode(25);
+    std::cout << "expected: \n10->15->20->75->80->90->92" << std::endl;
+    list.display();
+
+    std::cout << "expected false (0): " << list.deleteNode(95) << std::endl;
 
     return 0;
 }
