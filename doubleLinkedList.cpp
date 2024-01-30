@@ -18,7 +18,7 @@ class DoubleLinkedLink {
     public:
         DoubleLinkedLink() : head(nullptr) {}
 
-        // insert new node at beginning of list
+        // insert new node at beginning of list <done>
         void insertAtBeginning(int value) {
             Node* newNode = new Node(value); // init new node
             newNode->prev = nullptr; // set prev to null
@@ -26,7 +26,7 @@ class DoubleLinkedLink {
             head = newNode; // set head to new node
         }
 
-        // insert new node after specified node
+        // insert new node after specified node <done>
         bool insertAfter(int refr, int value) {
             Node* curr = head;
             Node* newNode = new Node(value);
@@ -53,10 +53,28 @@ class DoubleLinkedLink {
 
         // insert new node before specified node
         bool insertBefore(int refr, int value) {
+            Node* curr = head;
+            Node* newNode = new Node(value);
+            while (curr->data != refr) {
+                if(curr->next == nullptr) {
+                    // node not found, return false
+                    return false;
+                }
+                curr = curr->next;
+            }
+            // checking for insert at first node
+            if(curr != head) {
+                curr->prev->next = newNode;
+                newNode->prev = curr->prev;
+            } else {
+                newNode->next = curr;
+            }
+            curr->prev = newNode;
+            newNode->next = curr;
             return true;
         }
 
-        // insert new node at end of list
+        // insert new node at end of list <done>
         void insertAtEnd(int value) {
             Node* newNode = new Node(value); // init new node
             if(head == nullptr) {
@@ -72,7 +90,7 @@ class DoubleLinkedLink {
             }
         }
 
-        // display elements of list starting w/ head
+        // display elements of list starting w/ head <done>
         void display() {
             Node* curr = head;
             while (curr->next != nullptr) {
@@ -82,12 +100,33 @@ class DoubleLinkedLink {
             std::cout << curr->data << "\n" << std::endl;
         }
 
-        // display elements of list starting w/ end
+        // display elements of list starting w/ end <done>
         void displayBackwards() {
-            return;
+            Node* curr = head;
+            while (curr->next != nullptr) {
+                curr = curr->next;
+            }
+            // curr is pointing to last node now
+            while(curr->prev != nullptr) {
+                std::cout << curr->data << "->";
+                curr = curr->prev;
+            }
+            std::cout << curr->data << "\n" << std::endl;
         }
 
-        // destructor to free memory used by list
+        // destructor to free memory used by list <done>
+        ~DoubleLinkedLink() {
+            Node* curr = head; // used to step through list
+            Node* next; // used to hold next node when we are deleting current
+
+            // step through list until null (last node found)
+            while(curr != nullptr) {
+                next = curr->next;
+                delete curr;
+                curr = next;
+            }
+            head = nullptr;
+        }
 };
 
 int main() {
@@ -112,6 +151,14 @@ int main() {
     list.insertAfter(20, 25);
     list.insertAfter(90, 95);
     std::cout << "expected: \n10->15->20->25->80->90->95" << std::endl;
+    list.display();
+    // testing backwards display
+    std::cout << "backwards now, expected: \n95->90->80->25->20->15->10" << std::endl;
+    list.displayBackwards();
+
+    list.insertBefore(10, 5);
+    list.insertBefore(80, 75);
+    list.insertBefore(95, 92);
     list.display();
 
     return 0;
