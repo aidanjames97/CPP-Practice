@@ -54,14 +54,14 @@ public:
         Node* temp = head;
         Node* prev = nullptr;
 
-        // If head node itself holds the value to be deleted
+        // if head node itself holds the value to be deleted
         if (temp != nullptr && temp->data == value) {
             head = temp->next;
             delete temp;
             return;
         }
 
-        // Search for the value to be deleted, keep track of the
+        // search for the value to be deleted, keep track of the
         // previous node as we need to change 'prev->next'
         while (temp != nullptr && temp->data != value) {
             prev = temp;
