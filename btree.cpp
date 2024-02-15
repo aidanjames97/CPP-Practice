@@ -66,6 +66,14 @@ class bTree {
             root->right = remove(root->right, tmp->data);
         }
 
+        // searching for element in tree
+        Node* search(Node* root, int value) {
+            if(root == nullptr) return root;
+            if(value < root->data) {
+                root->left = search(root->left, value);
+            } else if (value > root->data)
+        }
+
         // tree traversals! (3)
 
         // inorder traversal
