@@ -77,6 +77,23 @@ class queue {
                 insert(temp.remove());
             }
         }   
+
+        // peek at top element without removing it
+        int peek() {
+            if(head == nullptr) {
+                throw runtime_error("Empty Queue");
+            }
+
+            // queue is not empty, return head
+            return head->data;
+        }
+
+        // empty the queue
+        void empty() {
+            while(head != nullptr) {
+                remove();
+            }
+        }
 };
 
 int main() {
@@ -121,5 +138,11 @@ int main() {
 
     cout << q.remove() << endl;
     cout << q.remove() << "\n" << endl;
+
+    q.empty();
+
+    q.insert(44);
+    cout << "peek, should be 44" << endl;
+    cout << q.peek() << "\n" << endl;
 
 }
